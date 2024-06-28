@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { existsSync } from 'fs';
+import { Nota } from 'entities/nota.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { existsSync } from 'fs';
       inject: [ConfigService],
       useFactory: (configService:ConfigService) => ({
         type: 'postgres',
-        autoLoadEntities: true,
+        entities: [Nota],
         synchronrize: configService.get<boolean>('DB_SYNC'),
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
